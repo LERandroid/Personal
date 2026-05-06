@@ -1,0 +1,79 @@
+.box {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+	margin: 20px;
+}
+.box .percent {
+	position: relative;
+	width: 150px;
+	height: 150px;
+	cursor: pointer;
+}
+.box .percent svg {
+	position: relative;
+	width: 150px;
+	height: 150px;
+}
+.box .percent svg circle {
+	width: 150px;
+	height: 150px;
+	stroke-width: 10;
+	fill: none;
+	stroke: 10;
+	transform: translate(5px, 5px);
+	stroke-dasharray: 440;
+	stroke-dashoffset: 440;
+}
+#p1 {
+	stroke: deepskyblue;
+}
+#p2 {
+	stroke: orange;
+}
+#p3 {
+	stroke: green;
+}
+#p4 {
+	stroke: rebeccapurple;
+}
+.box .percent svg circle:nth-child(1) {
+	stroke-dashoffset: 0;
+	stroke: #f3f3f3;
+}
+#proagress1 {
+	stroke-dashoffset: calc(440 - (440 * 40) / 100);
+}
+#proagress2 {
+	stroke-dashoffset: calc(440 - (440 * 82) / 100);
+}
+#proagress3 {
+	stroke-dashoffset: calc(440 - (440 * 70) / 100);
+}
+#proagress4 {
+	stroke-dashoffset: calc(440 - (440 * 54) / 100);
+}
+.box .percent .number {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: black;
+}
+.box .percent .number h2 {
+	font-size: 30px;
+}
+.box .percent .number span {
+	font-size: 20px;
+}
+.box .text {
+	margin-top: 10px;
+	font-size: 23px;
+	font-weight: 600;
+}
