@@ -148,3 +148,62 @@ function getIsMobile() {
 		return true;
 	}
 }
+
+document.addEventListener('DOMContentLoaded', async function () {
+  const contentEl = document.getElementById('diary-content');
+  const timeEl = document.getElementById('diary-time');
+  const toggleEl = document.getElementById('diary-toggle');
+
+  try {
+    // 请求接口
+    let res = await fetch('http://119.147.202.190:12976/api/diary/list');
+    let list = await res.json();
+
+    if (!list || list.length === 0) {
+      contentEl.innerText = "暂无日记";
+      timeEl.innerText = "";
+      return;
+    }
+
+    // ==============================================
+    // ✅ 正确：按时间 diarytime 排序，取最新一条
+    // ==============================================
+    let latestDiary = list.sort((a, b) => {
+      return new Date(b.diarytime) - new Date(a.diarytime);
+    })[0];
+
+    // 渲染内容
+    let fullContent = latestDiary.content || "无内容";
+    let showContent = fullContent.length > 100 
+      ? fullContent.substring(0, 100) + "..." 
+      : fullContent;
+
+    timeEl.innerText = latestDiary.diarytime || "未知时间";
+    contentEl.innerText = showContent;
+    contentEl.dataset.full = fullContent;
+    contentEl.dataset.short = showContent;
+
+    // 超过100字显示按钮
+    if (fullContent.length > 100) {
+      toggleEl.style.display = "inline-block";
+    }
+
+    // 展开/收起
+    toggleEl.onclick = function () {
+      if (contentEl.innerText.endsWith("...")) {
+        contentEl.innerText = contentEl.dataset.full;
+        toggleEl.innerText = "点击收起";
+        contentEl.classList.add("expanded");
+      } else {
+        contentEl.innerText = contentEl.dataset.short;
+        toggleEl.innerText = "点击展开";
+        contentEl.classList.remove("expanded");
+      }
+    };
+
+  } catch (err) {
+    contentEl.innerText = "加载日记失败";
+    timeEl.innerText = "";
+    console.error("错误：", err);
+  }
+});
