@@ -464,3 +464,104 @@ body {
 	font-size: 34px;
 	margin-left: 10px;
 }
+
+/* 日记模块整体样式 */
+.diary-container {
+  width: 100%;
+  padding: 10px 0;
+}
+.diary-box {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid #0ef;
+  border-radius: 12px;
+  padding: 20px;
+  color: #fff;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+  margin-top: 10px;
+  margin-left: 100px;
+  margin-right: 100px;
+}
+.diary-title {
+  font-size: 18px;
+  margin-bottom: 15px;
+  color: #0ef;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.diary-content {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #eee;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  word-break: break-all;
+  white-space: pre-wrap;
+}
+.diary-content.collapsed {
+  max-height: 120px;
+}
+#diary-toggle {
+  margin-top: 12px;
+  background: rgba(0, 255, 255, 0.1);
+  border: 1px solid #0ef;
+  color: #0ef;
+  padding: 6px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.2s;
+}
+#diary-toggle:hover {
+  background: rgba(0, 255, 255, 0.2);
+}
+
+/* 适配你当前页面的日记卡片样式 */
+.diary-card {
+  width: 620px;
+  margin: 20px auto;
+  background: rgba(128, 128, 128, 0.8);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+  text-align: left;
+}
+
+.diary-title {
+  font-size: 16px;
+  color: #00ffff;
+  font-weight: bold;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.diary-text {
+  font-size: 14px;
+  color: #ffffff;
+  line-height: 1.5;
+  margin: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  max-height: 65px; /* 控制默认显示约100字的高度 */
+}
+
+.diary-text.expanded {
+  max-height: 1000px; /* 展开后无高度限制 */
+}
+
+.diary-toggle {
+  margin-top: 8px;
+  background: transparent;
+  border: none;
+  color: #00ffff;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.diary-toggle:hover {
+  text-decoration: underline;
+}
+
