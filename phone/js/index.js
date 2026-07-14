@@ -193,11 +193,12 @@ document.addEventListener('DOMContentLoaded', async function () {
     contentEl.dataset.full = fullContent;
     contentEl.dataset.short = showContent;
 
-    if (fullContent.length < maxLength) {
-      toggleEl.style.display = 'inline-block';
-      toggleEl.innerText = '点击展开';
-    }
-
+    // if (fullContent.length < maxLength) {
+    //   toggleEl.style.display = 'inline-block';
+    //   toggleEl.innerText = '点击展开';
+    // }
+	toggleEl.style.display = 'inline-block';
+	toggleEl.innerText = '点击展开';
     toggleEl.onclick = function () {
       if (contentEl.innerText.endsWith('...')) {
         contentEl.innerText = contentEl.dataset.full;
