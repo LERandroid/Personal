@@ -154,56 +154,65 @@ document.addEventListener('DOMContentLoaded', async function () {
   const timeEl = document.getElementById('diary-time');
   const toggleEl = document.getElementById('diary-toggle');
 
-  try {
-    // 请求接口
-    let res = await fetch('http://119.147.202.190:12976/api/diary/list');
-    let list = await res.json();
+  toggleEl.style.display = 'none';
+  contentEl.innerText = '加载中...';
+  timeEl.innerText = '';
 
-    if (!list || list.length === 0) {
-      contentEl.innerText = "暂无日记";
-      timeEl.innerText = "";
+  try {
+    const res = await fetch('http://119.147.202.190:12977/api/diaries/?offset=0&pageSize=100');
+    const result = await res.json();
+
+    // 1. 校验接口状态码
+    if (result.code !== 200) {
+      contentEl.innerText = `请求异常：${result.msg}`;
+      return;
+    }
+    // 2. 取出真实日记数组
+    let diaryList = result.data || [];
+    // 过滤已删除日记
+    diaryList = diaryList.filter(item => item.delFlag === 0);
+
+    if (diaryList.length === 0) {
+      contentEl.innerText = '暂无日记';
       return;
     }
 
-    // ==============================================
-    // ✅ 正确：按时间 diarytime 排序，取最新一条
-    // ==============================================
-    let latestDiary = list.sort((a, b) => {
-      return new Date(b.diarytime) - new Date(a.diarytime);
+    // 按时间倒序取最新，修正字段 diaryTime
+    const latestDiary = diaryList.sort((a, b) => {
+      return new Date(b.diaryTime) - new Date(a.diaryTime);
     })[0];
 
-    // 渲染内容
-    let fullContent = latestDiary.content || "无内容";
-    let showContent = fullContent.length > 100 
-      ? fullContent.substring(0, 100) + "..." 
+    const fullContent = latestDiary.content?.trim() || '无内容';
+    const maxLength = 100;
+    const showContent = fullContent.length > maxLength 
+      ? fullContent.substring(0, maxLength) + '...' 
       : fullContent;
 
-    timeEl.innerText = latestDiary.diarytime || "未知时间";
+    timeEl.innerText = latestDiary.diaryTime || '未知时间';
     contentEl.innerText = showContent;
     contentEl.dataset.full = fullContent;
     contentEl.dataset.short = showContent;
 
-    // 超过100字显示按钮
-    if (fullContent.length > 100) {
-      toggleEl.style.display = "inline-block";
+    if (fullContent.length > maxLength) {
+      toggleEl.style.display = 'inline-block';
+      toggleEl.innerText = '点击展开';
     }
 
-    // 展开/收起
     toggleEl.onclick = function () {
-      if (contentEl.innerText.endsWith("...")) {
+      if (contentEl.innerText.endsWith('...')) {
         contentEl.innerText = contentEl.dataset.full;
-        toggleEl.innerText = "点击收起";
-        contentEl.classList.add("expanded");
+        toggleEl.innerText = '点击收起';
+        contentEl.classList.add('expanded');
       } else {
         contentEl.innerText = contentEl.dataset.short;
-        toggleEl.innerText = "点击展开";
-        contentEl.classList.remove("expanded");
+        toggleEl.innerText = '点击展开';
+        contentEl.classList.remove('expanded');
       }
     };
 
   } catch (err) {
-    contentEl.innerText = "加载日记失败";
-    timeEl.innerText = "";
-    console.error("错误：", err);
+    // 打印完整错误，看控制台精准定位问题
+    console.error('加载日记捕获异常：', err);
+    contentEl.innerText = '加载日记失败，请查看控制台报错';
   }
 });
