@@ -213,6 +213,6 @@ document.addEventListener('DOMContentLoaded', async function () {
   } catch (err) {
     // 打印完整错误，看控制台精准定位问题
     console.error('加载日记捕获异常：', err);
-    contentEl.innerText = '没有SSL有啥办法呢？点开吧777，来吧，你好呀？！11111111111111111111111111111111111111111111111';
+    contentEl.innerText = '没有SSL有啥办法呢？点开吧777，来吧，你好呀？！';
   }
 });
