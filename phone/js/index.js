@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   timeEl.innerText = '';
 
   try {
-    const res = await fetch('http://119.147.202.190:12977/api/diaries/?offset=0&pageSize=100');
+    const res = await fetch('http://119.147.202.190:12977/api/diaries/?offset=0&pageSize=5');
     const result = await res.json();
 
     // 1. 校验接口状态码
