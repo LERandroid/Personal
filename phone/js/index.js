@@ -212,6 +212,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
   } catch (err) {
     // 打印完整错误，看控制台精准定位问题
+	alert('今天是'+dayjs().format(yyyy-MM-dd));
     console.error('加载日记捕获异常：', err);
     contentEl.innerText = '今天是：';
 	toggleEl.style.display = 'inline-block';
